@@ -1,0 +1,45 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+processors:
+  batch:
+  # Unsets error codes for cache client 404s marked by cache-client-extension.
+  # This allows collectors to be independent of the decision of a service owner to mark a client span as a type of
+  # cache-like client or not.
+  span/unset_cache_client_404:
+    include:
+      attributes:
+        - Key: http.status_code
+          Value: 404
+        - Key: http.is_cache_client
+          Value: true
+      match_type: strict
+    status:
+      code: "Unset"
+
+exporters:
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  prometheusremotewrite:
+    endpoint: http://prometheus:9090/api/v1/write
+  logging:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch, span/unset_cache_client_404]
+      exporters: [jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheusremotewrite]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
