@@ -1,6 +1,6 @@
 # Apress Source Code
 
-This repository accompanies [Practical OpenTelemetry: Adopting Open Observability Standards Across Your Organization](https://www.link.springer.com/book/10.1007/9781484290743) by Daniel Gomez-Blanco (Apress, 2023).
+This repository accompanies [Practical OpenTelemetry: Adopting Open Observability Standards Across Your Organization](https://www.link.springer.com/book/10.1007/9781484290743) by Daniel Gomez Blanco (Apress, 2023).
 
 [comment]: #cover
 ![Cover image](9781484290743.jpg)
