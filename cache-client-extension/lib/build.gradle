@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Dependencies marked as compileOnly as classes are provided by Java agent at runtime
+    compileOnly platform("io.opentelemetry:opentelemetry-bom:1.21.0")
+    compileOnly('io.opentelemetry:opentelemetry-api')
+    compileOnly('io.opentelemetry:opentelemetry-sdk')
+    compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi")
+
+    compileOnly platform("io.opentelemetry:opentelemetry-bom-alpha:1.21.0-alpha")
+    compileOnly ("io.opentelemetry:opentelemetry-semconv")
+
+    // Use Google's AutoService to generate SPI files
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc5'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc5'
+}
+
+project.archivesBaseName = 'cache-client-extension'
+jar {}

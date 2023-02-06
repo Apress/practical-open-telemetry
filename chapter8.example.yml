@@ -1,0 +1,79 @@
+###############################################################################
+# This config file is the config file used in Chapter 8 of Practical
+# OpenTelemetry. It is a copy of the default `example.yml` used within the
+# official dropwizard-example@2.1.1 (https://github.com/dropwizard/dropwizard)
+# replacing the `logging` block for a block demonstrating OpenTelemetry
+# instrumentation.
+###############################################################################
+
+template: Hello, %s!
+
+defaultName: ${DW_DEFAULT_NAME:-Stranger}
+
+# Database settings.
+database:
+
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+
+  # the username
+  user: sa
+
+  # the password
+  password: sa
+
+  # the JDBC URL
+  url: jdbc:h2:./target/example
+
+# use the simple server factory if you only want to run on a single port
+#server:
+#  type: simple
+#  connector:
+#    type: http
+#    port: 8080
+
+server:
+#  softNofileLimit: 1000
+#  hardNofileLimit: 1000
+  applicationConnectors:
+    - type: http
+      port: 8080
+    - type: https
+      port: 8443
+      keyStorePath: example.keystore
+      keyStorePassword: example
+    #this requires the alpn-boot library on the JVM's boot classpath
+    #- type: h2
+    #  port: 8445
+    #  keyStorePath: example.keystore
+    #  keyStorePassword: example
+  adminConnectors:
+    - type: http
+      port: 8081
+    - type: https
+      port: 8444
+      keyStorePath: example.keystore
+      keyStorePassword: example
+
+# Logging settings.
+logging:
+  appenders:
+    - type: console
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}]
+       [%t] %logger{5} - %X{code} %msg
+       trace_id=%X{trace_id} span_id=%X{span_id}
+       trace_flags=%X{trace_flags}%n"
+
+# the key needs to match the configuration key of the renderer (ViewRenderer::getConfigurationKey)
+viewRendererConfiguration:
+    freemarker:
+        strict_syntax: yes
+        whitespace_stripping: yes
+
+metrics:
+  reporters:
+    - type: graphite
+      host: localhost
+      port: 2003
+      prefix: example
+      frequency: 1m
