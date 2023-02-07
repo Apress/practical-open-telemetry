@@ -15,7 +15,7 @@ illustrate the concepts discussed in each chapter. The intention is not to creat
 OpenTelemetry demo environment, so their source code has not been made available in this repo. This is intentional,
 as OpenTelemetry provides its official OpenTelemetry Demo (available at
 https://github.com/open-telemetry/opentelemetry-demo) for this purpose, which allows users to work with OpenTelemetry
-instrumented services and visualise the telemetry produced in the observability platform of their choice.
+instrumented services and visualise the telemetry produced in the observability platform they're most familiar with.
 
 However, _Chapter 4_ demonstrates the power of standard instrumentation to automatically generate and export telemetry
 from within an existing Java application that has not been previously instrumented with OpenTelemetry. The resources in
